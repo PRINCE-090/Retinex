@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Retinex Design System — Glassmorphism
+ *
+ * Background: very light gray (#F8FAFC), flat
+ * Structural glass: rgba(255,255,255,0.45), blur(32px) -- decorative, floats with a soft indigo-tinted glow
+ * Data-dense glass: rgba(255,255,255,0.82), blur(28px) -- legibility first, still visibly glass
+ * Primary text: #0F172A · Secondary text: #64748B
+ * Accent: confident indigo #3B5BDB, used sparingly
+ * Severity (grade indicators only): low #059669 / moderate #D97706 / high #DC2626
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #E5E7EB; /* Flat light-gray base from dashboard */
+  color: #111827;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Cabinet Grotesk / Space Grotesk for headings and UI labels */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-serif {
+  font-family: 'Cabinet Grotesk', 'Space Grotesk', 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #0F172A;
+}
+
+.font-mono,
+code,
+pre {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+
+.font-readout {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-weight: 500;
+}
+
+/* Role background + floating navbar, ported from Aura-Voice-Agent
+   (.patient-page-bg / .glass-card). The gradient overlay is layered over
+   the image exactly like Aura does; only the tint differs per role. */
+.role-bg {
+  background-color: var(--role-color, #0f172a);
+  background-image: var(--role-overlay), var(--role-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.aura-nav {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 30px rgba(15, 30, 80, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Patient "High contrast" setting: solid dark backdrop, full-white text,
+   stronger borders. Attribute selectors so it needs no per-page changes. */
+.role-bg.hc-mode {
+  background-image: linear-gradient(rgba(2, 8, 26, 0.97), rgba(2, 8, 26, 0.97)) !important;
+}
+.hc-mode [class*="text-white/"],
+.hc-mode [class*="text-sky-"],
+.hc-mode [class*="text-slate-"],
+.hc-mode [class*="text-neutral-4"],
+.hc-mode [class*="text-neutral-5"] {
+  color: #ffffff !important;
+}
+.hc-mode [class*="border-white/"],
+.hc-mode [class*="ring-white/"] {
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  --tw-ring-color: rgba(255, 255, 255, 0.65) !important;
+}
+.hc-mode [class*="bg-white/"]:not([class*="bg-white/2"]):not([class*="bg-white/9"]) {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+
+/* ===== Light mode (Aura palette): pale glass over the light background image =====
+   Re-colours the existing white-on-dark page classes without touching each page.
+   "Dark islands" (image viewers, gradient buttons, solid dark chips) are excluded so their white text stays. */
+.light-mode [class~="text-white"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #0f172a !important; }
+.light-mode [class~="text-slate-100"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #0f172a !important; }
+.light-mode [class~="text-slate-200"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #0f172a !important; }
+.light-mode [class~="text-sky-100"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #0f172a !important; }
+.light-mode [class~="text-amber-100"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #0f172a !important; }
+.light-mode [class*="text-white/"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class*="text-sky-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class~="text-slate-300"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class~="text-slate-400"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class~="text-slate-500"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class~="text-gray-300"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #475569 !important; }
+.light-mode [class*="text-emerald-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #047857 !important; }
+.light-mode [class*="text-teal-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #047857 !important; }
+.light-mode [class*="text-rose-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #be123c !important; }
+.light-mode [class*="text-red-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #be123c !important; }
+.light-mode [class*="text-amber-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #b45309 !important; }
+.light-mode [class*="text-orange-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #b45309 !important; }
+.light-mode [class*="text-yellow-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #b45309 !important; }
+.light-mode [class*="text-blue-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #1d4ed8 !important; }
+.light-mode [class*="text-violet-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #6d28d9 !important; }
+.light-mode [class*="text-purple-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #6d28d9 !important; }
+.light-mode [class*="text-indigo-"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { color: #6d28d9 !important; }
+.light-mode [class~="bg-white/5"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.30) !important; }
+.light-mode [class~="bg-white/10"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.34) !important; }
+.light-mode [class~="bg-white/15"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.34) !important; }
+.light-mode [class~="bg-white/20"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.50) !important; }
+.light-mode [class~="bg-white/30"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.50) !important; }
+.light-mode [class~="bg-white/40"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.50) !important; }
+.light-mode [class*="bg-black/1"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.62) !important; }
+.light-mode [class*="bg-black/2"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.62) !important; }
+.light-mode [class*="bg-black/3"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: rgba(255, 255, 255, 0.62) !important; }
+.light-mode [class~="border-white/5"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(71, 85, 105, 0.20) !important; --tw-ring-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode [class*="border-white/10"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(71, 85, 105, 0.20) !important; --tw-ring-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode [class*="border-white/15"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(71, 85, 105, 0.20) !important; --tw-ring-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode [class*="ring-white/10"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(71, 85, 105, 0.20) !important; --tw-ring-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode [class*="ring-white/15"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(71, 85, 105, 0.20) !important; --tw-ring-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode [class*="border-white/2"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(255, 255, 255, 0.70) !important; }
+.light-mode [class*="border-white/3"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(255, 255, 255, 0.70) !important; }
+.light-mode [class*="border-white/4"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(255, 255, 255, 0.70) !important; }
+.light-mode [class*="border-white/50"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(255, 255, 255, 0.70) !important; }
+.light-mode [class*="border-white/7"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { border-color: rgba(255, 255, 255, 0.70) !important; }
+.light-mode [class*="backdrop-blur"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { box-shadow: 0 10px 30px rgba(45, 80, 155, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important; }
+.light-mode [class*="bg-white"][class~="text-neutral-900"]:not(:is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill) *, :is(nav, [class~="bg-black"], [class~="bg-slate-900"], [class~="bg-neutral-950"], [class*="bg-black/4"], [class*="bg-black/5"], [class*="bg-black/6"], [class*="bg-black/7"], [class*="bg-black/8"], [class*="from-"], [class~="bg-sky-500"], [class~="bg-emerald-400"], [class~="bg-emerald-500"], [class~="bg-violet-500"], .dark-island, .seg-pill)) { background-color: #0f172a !important; color: #ffffff !important; }
+.light-mode .seg-pill { background-color: #0f172a !important; }
+.light-mode .seg-active { color: #ffffff !important; }
+.light-mode [class*="divide-white"] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(71, 85, 105, 0.20) !important; }
+.light-mode ::placeholder { color: #64748b !important; }
+.light-mode select option { color: #0f172a; background: #ffffff; }
+
+/* Light navbar: Aura's glass-card + PatientNav shadow */
+.aura-nav-light {
+  background: rgba(228, 240, 255, 0.45);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: 0 8px 30px rgba(45, 80, 155, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+
+@layer components {
+  /* Structural glass: converted to solid white rounded cards */
+  .glass-structural {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 28px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+
+  /* Data-dense glass: converted to solid white rounded cards */
+  .clinical-card,
+  .panel,
+  .glass-card,
+  .glass-dense {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+
+  .glass-hover:hover {
+    transform: translateY(-2px);
+    border-color: rgba(234, 108, 83, 0.2);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .clinical-card-hover:hover,
+  .glass-card-hover:hover {
+    transform: translateY(-2px);
+    border-color: rgba(234, 108, 83, 0.2);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Buttons */
+  .btn,
+  .clinical-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px; /* Pill shape from dashboard */
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #111827;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .btn:hover,
+  .clinical-btn:hover {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled,
+  .clinical-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+  }
+
+  /* Primary: solid coral */
+  .btn-primary,
+  .clinical-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px; /* Pill shape */
+    background-color: #EA6C53;
+    color: #FFFFFF;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    box-shadow: 0 4px 12px rgba(234, 108, 83, 0.25);
+  }
+
+  .btn-primary:hover,
+  .clinical-btn-primary:hover {
+    background-color: #D5533A;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(234, 108, 83, 0.35);
+  }
+
+  .btn-primary:active,
+  .clinical-btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary:disabled,
+  .clinical-btn-primary:disabled {
+    cursor: not-allowed;
+    background-color: #94A3B8;
+    color: #FFFFFF;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #64748B;
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(15, 23, 42, 0.04);
+    color: #0F172A;
+  }
+
+  /* Form inputs */
+  .field,
+  .clinical-input {
+    width: 100%;
+    border-radius: 9999px;
+    border: 1px solid #E5E7EB;
+    background: #F9FAFB;
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+    color: #111827;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    box-shadow: none;
+  }
+
+  .field:focus,
+  .clinical-input:focus {
+    outline: none;
+    border-color: #EA6C53;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(234, 108, 83, 0.15);
+  }
+
+  /* Spinner -- a loading circle, not a decorative pill; stays round */
+  .lens-spinner {
+    display: inline-block;
+    border-radius: 9999px;
+    animation: spin 1s linear infinite;
+    width: 1.1em;
+    height: 1.1em;
+    border: 2px solid rgba(59, 91, 219, 0.2);
+    border-top-color: #3B5BDB;
+  }
+
+  .lens-spinner-invert {
+    display: inline-block;
+    border-radius: 9999px;
+    animation: spin 1s linear infinite;
+    width: 1.1em;
+    height: 1.1em;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #FFFFFF;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-scroll {
+  animation: marquee-scroll var(--marquee-duration, 28s) linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-scroll {
+    animation-play-state: paused;
+  }
+}
